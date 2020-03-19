@@ -5,5 +5,9 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+/** GET router ping */
+router.get('/ping', function(req, res, next) {
+  res.json({ message: 'Pong!'})
+});
 
 module.exports = router;
