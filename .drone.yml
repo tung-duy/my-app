@@ -1,11 +1,22 @@
 pipeline:
-  build:
-    image: node
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./.npm-cache
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
+
+  install:
+    image: node:alpine
     commands:
-      - npm install
-      - npm test
+      - node -v
+      - npm -v
+      - npm config set cache-folder .npm-cache
+      - npm install --pure-lockfile
   publish:
     image: plugins/docker
     repo: drone/node-demo
-    secrets: [ docker_username, docker_password ]
+    secrets: [ Account-docker-hub, Password-docker-hub]
     dry_run: true # remove this to publish
