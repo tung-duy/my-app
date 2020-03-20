@@ -17,6 +17,12 @@ pipeline:
       - npm install --pure-lockfile
   publish:
     image: plugins/docker
-    repo: drone/node-demo
-    secrets: [ Account-docker-hub, Password-docker-hub]
-    dry_run: true # remove this to publish
+    settings:
+      username: 
+        from_secret: Account-docker-hub
+      password: 
+        from_secret: Password-docker-hub
+      repo: tungduy/drone-example
+      dockerfile: ./Dockerfile
+    # secrets: [ Account-docker-hub, Password-docker-hub]
+    # dry_run: true # remove this to publish
