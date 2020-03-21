@@ -23,14 +23,14 @@ steps:
     password: 
       from_secret: docker_password
 
-- name: publish
+- name: Run Images
   image: appleboy/drone-ssh
   settings:
-    host: 159.65.134.221
+    host: fbeta.tech
     port: 22
+      command_timeout: 6m
     username: fbeta
-    command_timeout: 6m
-    ssh_key:
+    password:
       from_secret: ssh_key
     script:
       - 'echo ${DRONE_BUILD_NUMBER} > .cache-version'
