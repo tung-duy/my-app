@@ -51,7 +51,7 @@ steps:
     webhook: 'https://hooks.slack.com/services/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'
     channel: drone-notify
     username: drone
-    icon_emoji: ':hammer:'
+    icon_emoji: ':bowtie:'
       template: >
         <{{build.link}}|Build {{build.number}}> ở {{build.branch}} *{{build.status}}*
   when:
