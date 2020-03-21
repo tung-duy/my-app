@@ -2,15 +2,15 @@ kind: pipeline
 name: default
 
 steps:
-  - name: Install
-    image: node:alpine
-    commands:
-      - node -v
-      - npm -v
-      - npm install --pure-lockfile
-  - publish:
-    image: plugins/docker
-    repo: tungduy/drone-demo
-    dockerfile: Dockerfile
-    secrets: [ docker_username, docker_password ]
-    tags: [ latest, 1.1 ]
+- name: Install
+  image: node:alpine
+  commands:
+    - node -v
+    - npm -v
+    - npm install --pure-lockfile
+- publish:
+  image: plugins/docker
+  repo: tungduy/drone-demo
+  dockerfile: Dockerfile
+  secrets: [ docker_username, docker_password ]
+  tags: [ latest, 1.1 ]
