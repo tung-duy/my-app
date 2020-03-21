@@ -1,14 +1,17 @@
 kind: pipeline
+type: docker
 name: default
 
 steps:
-- name: Install
+- name: build
   image: node:alpine
+  volumes:
+  - name: cache
+    path: /tmp/cache
   commands:
-    - node -v
-    - npm -v
-    - npm config set cache-folder .npm-cache
-    - npm install
+  - npm config set cache-folder .npm-cache
+  - npm install
+
 - name: Publish
   image: plugins/docker
   settings:
@@ -19,17 +22,50 @@ steps:
       from_secret: docker_username
     password: 
       from_secret: docker_password
-  
+
+- name: publish
+  image: appleboy/drone-ssh
+  settings:
+    host: 159.65.134.221
+    port: 22
+    username: fbeta
+    command_timeout: 6m
+    ssh_key:
+      from_secret: ssh_key
+    script:
+      - 'echo ${DRONE_BUILD_NUMBER} > .cache-version'
+      - docker pull tungduy/drone-demo:latest
+      - docker run --name drone-demo --network fbeta-networks -p 3010:3010 --env-file .env drone-demo
+      - 'echo Build success'
+  when:
+    branch:
+      - master
+    event:
+      - push
+    status:
+      - success
+
 - name: slack_build
   image: plugins/slack
   settings:
     webhook: 'https://hooks.slack.com/services/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'
     channel: drone-notify
     username: drone
-    icon_emoji: ':hammer:'
+    icon_emoji: ':running:'
+    link_names: true
+    image_url: https://unsplash.it/256/256/?random
     template: >
-      <{{build.link}}|Build {{build.number}}> ở {{build.branch}} *{{build.status}}*
+      {{#success build.status}}
+        build {{build.number}} succeeded. Good job. <@Tung Duy>
+      {{else}}
+        build {{build.number}} failed. Fix me please. <@drone-notify> <@someone>
+      {{/success}}
   when:
     status:
       - success
       - failure
+
+volumes:
+  - name: cache
+    host:
+      path: /var/lib/cache
