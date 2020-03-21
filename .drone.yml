@@ -15,5 +15,5 @@ steps:
   dockerfile: Dockerfile
   secrets: [ docker_username, docker_password ]
   tags:
-    - ${DRONE_BRANCH}-latest
+    - tungduy-latest
 
