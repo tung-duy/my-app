@@ -1,28 +1,35 @@
-pipeline:
-  # restore-cache:
-  #   image: drillster/drone-volume-cache
-  #   restore: true
-  #   mount:
-  #     - ./.npm-cache
-  #     - ./node_modules
-  #   volumes:
-  #     - /tmp/cache:/cache
+kind: pipeline
+name: default
 
-  install:
+steps:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./.yarn-cache
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
+  - name: Install
     image: node:alpine
     commands:
       - node -v
       - npm -v
-      - npm config set cache-folder .npm-cache
       - npm install --pure-lockfile
-  publish:
+  - publish:
     image: plugins/docker
-    settings:
-      username: 
-        from_secret: Account-docker-hub
-      password: 
-        from_secret: Password-docker-hub
-      repo: tungduy/drone-example
-      dockerfile: ./Dockerfile
-    # secrets: [ Account-docker-hub, Password-docker-hub]
-    # dry_run: true # remove this to publish
+    repo: tungduy/drone-demo
+    dockerfile: Dockerfile
+    secrets: [ docker_username, docker_password ]
+    tags: [ latest, 1.1 ]
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ./.yarn-cache
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
+    when:
+      branch: master
+  
