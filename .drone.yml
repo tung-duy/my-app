@@ -8,7 +8,7 @@ steps:
     - node -v
     - npm -v
     - npm install --pure-lockfile
-- publish:
+- name: Purplish
   image: plugins/docker
   repo: tungduy/drone-demo
   dockerfile: Dockerfile
