@@ -16,7 +16,6 @@ steps:
   secrets: [ docker_username, docker_password ]
   tags:
     - tungduy-latest
-
 - name: slack_build
 image: plugins/slack
 settings:
