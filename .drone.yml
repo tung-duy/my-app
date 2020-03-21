@@ -2,14 +2,6 @@ kind: pipeline
 name: default
 
 steps:
-  - name: restore-cache
-    image: drillster/drone-volume-cache
-    restore: true
-    mount:
-      - ./.npm-cache
-      - ./node_modules
-    volumes:
-      - /cache:/cache
   - name: Install
     image: node:alpine
     commands:
@@ -22,17 +14,3 @@ steps:
     dockerfile: Dockerfile
     secrets: [ docker_username, docker_password ]
     tags: [ latest, 1.1 ]
-  - name: rebuild-cache
-    image: drillster/drone-volume-cache
-    rebuild: true
-    mount:
-      - ./.npm-cache
-      - ./node_modules
-    volumes:
-      - /tmp/cache:/cache
-    when:
-      branch: master
-volumes:
-  - name:  cache
-    host:
-      path:  /tmp/cache
