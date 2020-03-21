@@ -51,14 +51,9 @@ steps:
     webhook: 'https://hooks.slack.com/services/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'
     channel: drone-notify
     username: drone
-    icon_emoji: ':running:'
-    link_names: true
-    template: >
-      {{#success build.status}}
-        build {{build.number}} succeeded. Good job. <@Tung Duy>
-      {{else}}
-        build {{build.number}} failed. Fix me please. <@drone-notify> <@someone>
-      {{/success}}
+    icon_emoji: ':hammer:'
+      template: >
+        <{{build.link}}|Build {{build.number}}> ở {{build.branch}} *{{build.status}}*
   when:
     status:
       - success
