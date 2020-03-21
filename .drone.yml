@@ -17,3 +17,16 @@ steps:
   tags:
     - tungduy-latest
 
+- name: slack_build
+image: plugins/slack
+settings:
+  webhook: 'https://hooks.slack.com/services/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'
+  channel: drone-notify
+  username: drone
+  icon_emoji: ':hammer:'
+  template: >
+    <{{build.link}}|Build {{build.number}}> ở {{build.branch}} *{{build.status}}*
+when:
+  status:
+    - success
+    - failure
