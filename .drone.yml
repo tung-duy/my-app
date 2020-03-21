@@ -2,11 +2,11 @@ kind: pipeline
 name: default
 
 steps:
-  restore-cache:
+  - name: restore-cache
     image: drillster/drone-volume-cache
     restore: true
     mount:
-      - ./.yarn-cache
+      - ./.npm-cache
       - ./node_modules
     volumes:
       - /tmp/cache:/cache
@@ -22,11 +22,11 @@ steps:
     dockerfile: Dockerfile
     secrets: [ docker_username, docker_password ]
     tags: [ latest, 1.1 ]
-  rebuild-cache:
+  - name: rebuild-cache
     image: drillster/drone-volume-cache
     rebuild: true
     mount:
-      - ./.yarn-cache
+      - ./.npm-cache
       - ./node_modules
     volumes:
       - /tmp/cache:/cache
