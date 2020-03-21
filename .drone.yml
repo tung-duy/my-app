@@ -9,7 +9,7 @@ steps:
       - ./.npm-cache
       - ./node_modules
     volumes:
-      - ./cache:/cache
+      - /cache:/cache
   - name: Install
     image: node:alpine
     commands:
@@ -29,7 +29,10 @@ steps:
       - ./.npm-cache
       - ./node_modules
     volumes:
-      - ./cache:/cache
+      - /tmp/cache:/cache
     when:
       branch: master
-  
+volumes:
+  - name:  cache
+    host:
+      path:  /tmp/cache
