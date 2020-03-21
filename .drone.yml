@@ -9,16 +9,21 @@ steps:
     - npm -v
     - npm config set cache-folder .npm-cache
     - npm install
-- name: Purplish
+- name: Publish
   image: plugins/docker
-  repo: tungduy/drone-demo
-  registry: hub.docker.com
-  dockerfile: Dockerfile
-  secrets: [ docker_username, docker_password ]
+  settings:
+    auto_tag: true
+    repo: tungduy/drone-demo
+    dockerfile: Dockerfile
+    username: 
+      from_secret: docker_username
+    password: 
+      from_secret: docker_password
+  
 - name: slack_build
   image: plugins/slack
   settings:
-    webhook: 'https://hooks.slack.com/services/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'
+    webhook: 'https://hooks.slack.com/services/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'
     channel: drone-notify
     username: drone
     icon_emoji: ':hammer:'
