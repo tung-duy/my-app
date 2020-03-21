@@ -28,7 +28,7 @@ steps:
   settings:
     host: fbeta.tech
     port: 22
-    command_timeout: 6m
+      command_timeout: 6m
     username: fbeta
     password:
       from_secret: ssh_key
@@ -52,8 +52,13 @@ steps:
     channel: drone-notify
     username: drone
     icon_emoji: ':bowtie:'
-      template: >
-        <{{build.link}}|Build {{build.number}}> ở {{build.branch}} *{{build.status}}*
+    link_names: true
+    template: >
+      {{#success build.status}}
+        build {{build.number}} succeeded. Good job. <@Tung Duy>
+      {{else}}
+        build {{build.number}} failed. Fix me please. <@drone-notify> <@someone>
+      {{/success}}
   when:
     status:
       - success
