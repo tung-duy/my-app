@@ -7,11 +7,13 @@ steps:
   commands:
     - node -v
     - npm -v
-    - npm install --pure-lockfile
+    - npm config set cache-folder .npm-cache
+    - npm install
 - name: Purplish
   image: plugins/docker
   repo: tungduy/drone-demo
   dockerfile: Dockerfile
   secrets: [ docker_username, docker_password ]
-  tags: latest
+  tags:
+    - ${DRONE_BRANCH}-latest
 
