@@ -12,10 +12,9 @@ steps:
 - name: Purplish
   image: plugins/docker
   repo: tungduy/drone-demo
+  registry: hub.docker.com
   dockerfile: Dockerfile
   secrets: [ docker_username, docker_password ]
-  tags:
-    - tungduy-latest
 - name: slack_build
   image: plugins/slack
   settings:
