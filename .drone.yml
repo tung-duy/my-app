@@ -53,7 +53,6 @@ steps:
     username: drone
     icon_emoji: ':running:'
     link_names: true
-    image_url: https://unsplash.it/256/256/?random
     template: >
       {{#success build.status}}
         build {{build.number}} succeeded. Good job. <@Tung Duy>
