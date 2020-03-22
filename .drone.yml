@@ -29,14 +29,17 @@ steps:
     host: fbeta.tech
     port: 22
     command_timeout: 6m
-    username: fbeta
+    username: 
+      from_secret: server_username
     password:
-      from_secret: ssh_key
+      from_secret: server_password
     script:
       - 'echo ${DRONE_BUILD_NUMBER} > .cache-version'
-      - docker pull tungduy/drone-demo:latest
-      - docker run --name drone-demo --network fbeta-networks -p 3010:3010 --env-file .env drone-demo
-      - 'echo Build success'
+      - ./project/.script/deploy.sh
+      # - docker login -u docker_username -p docker_password
+      # - docker pull tungduy/drone-demo:latest
+      # - docker run --name drone-demo --network fbeta-networks -p 3010:3010 --env-file .env drone-demo
+      # - 'echo Build success'
   when:
     branch:
       - master
