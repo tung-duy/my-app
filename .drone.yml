@@ -35,7 +35,7 @@ steps:
       from_secret: server_password
     script:
       - 'echo ${DRONE_BUILD_NUMBER} > .cache-version'
-      - ./project/.script/deploy.sh
+      - . ~/project/.script/deploy.sh
       # - docker login -u docker_username -p docker_password
       # - docker pull tungduy/drone-demo:latest
       # - docker run --name drone-demo --network fbeta-networks -p 3010:3010 --env-file .env drone-demo
