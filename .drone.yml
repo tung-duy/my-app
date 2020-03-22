@@ -34,9 +34,9 @@ steps:
     password:
       from_secret: server_password
     script:
-      - 'echo ${DRONE_BUILD_NUMBER} > .cache-version'
-      - 'echo $(pwd)'
-      - 'echo $(whoami)'
+      # - echo ${DRONE_BUILD_NUMBER} > .cache-version
+      - echo $(pwd)
+      - echo $(whoami)
       - cd  ~/project/.script
       - ./deploy.sh
       # - docker login -u docker_username -p docker_password
