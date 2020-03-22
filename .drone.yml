@@ -48,16 +48,27 @@ steps:
 - name: slack_build
   image: plugins/slack
   settings:
-    webhook: 'https://hooks.slack.com/services/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'
+    webhook:
+      from_secret: webhook_slack
     channel: drone-notify
     username: drone
     icon_emoji: ':bowtie:'
     link_names: true
     template: >
       {{#success build.status}}
-        build {{build.number}} succeeded. Good job. <@Tung Duy>
+        Build {{build.number}} succeeded and deployed to Production! :)
+        Event: {{build.event}}
+        Branch: {{build.branch}}
+        Tag: {{build.tag}}
+        Git SHA: {{build.commit}}
+        Link: {{build.link}}
       {{else}}
-        build {{build.number}} failed. Fix me please. <@drone-notify> <@someone>
+        Build {{build.number}} failed and not deployed to Production :(
+        Event: {{build.event}}
+        Branch: {{build.branch}}
+        Tag: {{build.tag}}
+        Git SHA: {{build.commit}}
+        Link: {{build.link}}
       {{/success}}
   when:
     status:
