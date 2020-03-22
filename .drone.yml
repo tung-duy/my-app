@@ -26,11 +26,10 @@ steps:
 - name: Run Images
   image: appleboy/drone-ssh
   settings:
-    host: fbeta.tech
+    host: drone.e-tutor.wtf
     port: 22
     command_timeout: 6m
-    username: 
-      from_secret: server_username
+    username: fbeta
     password:
       from_secret: server_password
     script:
