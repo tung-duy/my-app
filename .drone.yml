@@ -13,6 +13,7 @@ steps:
     password:
       from_secret: server_password
     target:  ~/project/e-tutor/${DRONE_REPO}
+    strip_components: 1
     source:
       - docker-compose.yml
   when:
@@ -33,6 +34,7 @@ steps:
     script:
       - echo $TOKEN
       - echo ${TOKEN}
+      - cat ~/project/e-tutor/${DRONE_REPO}/docker-compose.yml
   when:
     branch:
       - master
