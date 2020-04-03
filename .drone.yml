@@ -7,7 +7,7 @@ steps:
 - name: Run Images
   image: appleboy/drone-ssh
   environment:
-    test1:
+    TOKEN:
       from_secret: Test-env
   settings:
     host: drone.e-tutor.wtf
@@ -16,8 +16,9 @@ steps:
     username: fbeta
     password:
       from_secret: server_password
-    commands:
-      - "echo ${Test-env}"
+    script:
+      - echo $TOKEN
+      - echo ${TOKEN}
   when:
     branch:
       - master
