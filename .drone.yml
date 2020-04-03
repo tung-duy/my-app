@@ -18,6 +18,7 @@ steps:
       - docker-compose.yml
   when:
     branch: master
+
 - name: Run Images
   image: appleboy/drone-ssh
   environment:
