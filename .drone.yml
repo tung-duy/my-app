@@ -17,7 +17,7 @@ steps:
     password:
       from_secret: server_password
     script:
-      - echo ${Test-env}
+      - "echo ${Test-env}"
   when:
     branch:
       - master
