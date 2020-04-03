@@ -26,8 +26,9 @@ steps:
     password:
       from_secret: server_password
     script:
-      - echo $test1
-      - echo $${Test-env}
+      - echo --secret=$$test1
+      - echo --secret=$$Test-env
+      - echo $$Test-env
   when:
     branch:
       - master
