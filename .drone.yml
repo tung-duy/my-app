@@ -15,6 +15,9 @@ steps:
 
 - name: Run Images
   image: appleboy/drone-ssh
+  environment:
+    test1:
+      from_secret: Test-env
   settings:
     host: drone.e-tutor.wtf
     port: 22
@@ -23,7 +26,8 @@ steps:
     password:
       from_secret: server_password
     script:
-      - echo ${Test-env}
+      - echo $test1
+      - echo $${Test-env}
   when:
     branch:
       - master
