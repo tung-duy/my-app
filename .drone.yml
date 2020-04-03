@@ -12,16 +12,16 @@ steps:
   - npm config set cache-folder .npm-cache
   - npm install
 
-- name: Publish
-  image: plugins/docker
-  settings:
-    auto_tag: true
-    repo: tungduy/drone-demo
-    dockerfile: Dockerfile
-    username: 
-      from_secret: docker_username
-    password: 
-      from_secret: docker_password
+# - name: Publish
+#   image: plugins/docker
+#   settings:
+#     auto_tag: true
+#     repo: tungduy/drone-demo
+#     dockerfile: Dockerfile
+#     username: 
+#       from_secret: docker_username
+#     password: 
+#       from_secret: docker_password
 
 - name: Run Images
   image: appleboy/drone-ssh
@@ -34,10 +34,12 @@ steps:
       from_secret: server_password
     script:
       # - echo ${DRONE_BUILD_NUMBER} > .cache-version
+      - echo ${Test-env}
+
       - echo $(pwd)
       - echo $(whoami)
-      - cd  ~/project/.script
-      - ./deploy.sh
+      # - cd  ~/project/.script
+      # - ./deploy.sh
       # - docker login -u docker_username -p docker_password
       # - docker pull tungduy/drone-demo:latest
       # - docker run --name drone-demo --network fbeta-networks -p 3010:3010 --env-file .env drone-demo
@@ -50,35 +52,35 @@ steps:
     status:
       - success
 
-- name: slack_build
-  image: plugins/slack
-  settings:
-    webhook:
-      from_secret: webhook_slack
-    channel: drone-notify
-    username: drone
-    icon_emoji: ':bowtie:'
-    link_names: true
-    template: >
-      {{#success build.status}}
-        Build {{build.number}} succeeded and deployed to Production! :)
-        Event: {{build.event}}
-        Branch: {{build.branch}}
-        Tag: {{build.tag}}
-        Git SHA: {{build.commit}}
-        Link: {{build.link}}
-      {{else}}
-        Build {{build.number}} failed and not deployed to Production :(
-        Event: {{build.event}}
-        Branch: {{build.branch}}
-        Tag: {{build.tag}}
-        Git SHA: {{build.commit}}
-        Link: {{build.link}}
-      {{/success}}
-  when:
-    status:
-      - success
-      - failure
+# - name: slack_build
+#   image: plugins/slack
+#   settings:
+#     webhook:
+#       from_secret: webhook_slack
+#     channel: drone-notify
+#     username: drone
+#     icon_emoji: ':bowtie:'
+#     link_names: true
+#     template: >
+#       {{#success build.status}}
+#         Build {{build.number}} succeeded and deployed to Production! :)
+#         Event: {{build.event}}
+#         Branch: {{build.branch}}
+#         Tag: {{build.tag}}
+#         Git SHA: {{build.commit}}
+#         Link: {{build.link}}
+#       {{else}}
+#         Build {{build.number}} failed and not deployed to Production :(
+#         Event: {{build.event}}
+#         Branch: {{build.branch}}
+#         Tag: {{build.tag}}
+#         Git SHA: {{build.commit}}
+#         Link: {{build.link}}
+#       {{/success}}
+#   when:
+#     status:
+#       - success
+#       - failure
 
 volumes:
   - name: cache
