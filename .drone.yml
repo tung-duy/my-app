@@ -33,7 +33,7 @@ steps:
     script:
       - echo $TOKEN
       - echo ${TOKEN}
-      - cat ~/project/e-tutor/${DRONE_REPO}/docker-compose.yml
+      - cat ~/project/e-tutor/${DRONE_REPO_NAME}/docker-compose.yml
   when:
     branch:
       - master
