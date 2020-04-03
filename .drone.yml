@@ -4,15 +4,6 @@ type: docker
 name: default
 
 steps:
-- name: Install package
-  image: node:alpine
-  volumes:
-  - name: cache
-    path: /tmp/cache
-  commands:
-  - npm config set cache-folder .npm-cache
-  - npm install
-
 - name: Run Images
   image: appleboy/drone-ssh
   environment:
@@ -26,9 +17,7 @@ steps:
     password:
       from_secret: server_password
     script:
-      - echo --secret=$$test1
-      - echo --secret=$$Test-env
-      - echo $$Test-env
+      - echo ${Test-env}
   when:
     branch:
       - master
