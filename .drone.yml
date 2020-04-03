@@ -4,6 +4,19 @@ type: docker
 name: default
 
 steps:
+- name: Copy files
+  image: appleboy/drone-scp
+  host: drone.e-tutor.wtf
+  port: 22
+  username: fbeta
+  password:
+    from_secret: server_password
+  target:  ~/project/e-tutor/${DRONE_REPO}
+  source:
+    - docker-compose.yml
+  when:
+    branch: master
+    
 - name: Run Images
   image: appleboy/drone-ssh
   environment:
