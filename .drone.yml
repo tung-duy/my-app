@@ -1,5 +1,5 @@
 kind: pipeline
-type: docker
+# type: docker
 name: default
 
 steps:
@@ -33,10 +33,9 @@ steps:
     password:
       from_secret: server_password
     script:
-      # - echo ${DRONE_BUILD_NUMBER} > .cache-version
       - echo ${Test-env}
-      - echo $(pwd)
-      - echo $(whoami)
+      # - echo $(pwd)
+      # - echo $(whoami)
       # - cd  ~/project/.script
       # - ./deploy.sh
       # - docker login -u docker_username -p docker_password
@@ -46,10 +45,10 @@ steps:
   when:
     branch:
       - master
-    event:
-      - push
-    status:
-      - success
+    # event:
+    #   - push
+    # status:
+    #   - success
 
 # - name: slack_build
 #   image: plugins/slack
@@ -81,7 +80,7 @@ steps:
 #       - success
 #       - failure
 
-volumes:
-  - name: cache
-    host:
-      path: /var/lib/cache
+# volumes:
+#   - name: cache
+#     host:
+#       path: /var/lib/cache
