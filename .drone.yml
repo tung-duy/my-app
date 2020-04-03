@@ -3,14 +3,14 @@ type: docker
 name: default
 
 steps:
-- name: build
-  image: node:alpine
-  volumes:
-  - name: cache
-    path: /tmp/cache
-  commands:
-  - npm config set cache-folder .npm-cache
-  - npm install
+# - name: build
+#   image: node:alpine
+#   volumes:
+#   - name: cache
+#     path: /tmp/cache
+#   commands:
+#   - npm config set cache-folder .npm-cache
+#   - npm install
 
 # - name: Publish
 #   image: plugins/docker
@@ -35,7 +35,6 @@ steps:
     script:
       # - echo ${DRONE_BUILD_NUMBER} > .cache-version
       - echo ${Test-env}
-
       - echo $(pwd)
       - echo $(whoami)
       # - cd  ~/project/.script
