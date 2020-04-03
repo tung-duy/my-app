@@ -12,7 +12,7 @@ steps:
     username: fbeta
     password:
       from_secret: server_password
-    target:  ~/project/e-tutor/${DRONE_REPO}
+    target:  ~/project/e-tutor/${DRONE_REPO_NAME}
     strip_components: 1
     source:
       - docker-compose.yml
